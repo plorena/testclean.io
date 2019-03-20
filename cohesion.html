@@ -1,0 +1,57 @@
+> The Essence Of The Beautiful Is Unity In Variety. 
+W. Somerset Maugham (English Writer 1874/1965) 
+
+
+One common issue underlying the execution of tests (manual and/or automated) is the grade of dispersion of each test. What is a test dispersion? Test dispersion is when the tester become myopic or which means short-sighted to see "the whole picture". Executing/Analyzing each test case knowing the value of each test case in function of the whole application is important to measure the impact on the tested system. Test dispersion increase the time of execution, analysis and maintenance. This lead to an non efficient use of the test resources. In a medium/large test project with an important number of test cases, for the tester is really easy get lose the coherence of the total system. It's the same situation for automated frameworks, the engineer test automator needs to deep inside the specific test case, deal with the information required to execute this test and write the code to get that test automated/executed, all this knowing the "weight" of this test on the whole system.
+
+![](https://testautomationdesign.files.wordpress.com/2019/02/00001-1.png?w=1024)
+
+**Figure 1.** Each rectangle represents a test. The color indicates a real business function.
+
+## Causes
+
+Test dispersion is an (un)expected result of the best practices for software testing : a test must be independent, fast, repeatable always in a deterministic context, etc. Apply these principles to each test case is an inefficient way to manage the test resources (humans, methodology and test framework, etc). Another causes are Weak test design Writing / Executing test cases sorted in function of a technical component, i.e.:
+Database, API, Web services, Android Phone Writing / Executing test cases sorted with a number id, alphabetic order 
+
+## Why using technical components lead to test dispersion? 
+Technical components are frequently used like references to create bundles of test. Is a legacy of the mindset of the developers. Even if the software architecture is clean this logical layout not always are aligned with a real functional module. Some times these technical modules are much more transversal or too small to contain a real business value. For example : Databases API Web Services Boostraap Android Phone iPhone... 
+
+##How to increase the test cohesion in my test cycle ? 
+- Introduce Business Cardinality : Create business logic bundles of tests inside the test cycle OR split test cycle using these business logic bundles. 
+- Eliminate Technical Cardinality : Stop using technical components in order to create test cycles or sort your tests. 
+- Stop executing test using random parameters : test id, alphabetic order, etc 
+
+![](https://testautomationdesign.files.wordpress.com/2019/02/00002.png?w=1024)
+
+**Figure 2.** Test bundle using a functional parameter.
+
+The idea here is create a bundle of test using a functional parameter. The bundle must have a real functional name and value. For example in this case the bundle of tests are related to "customer" or "account". 
+###What to do if a test case is a mix of different functional values. 
+For these kind of test is better create a completely different bundle id : for example "portal" or "account". 
+###What to do if a test is completely not related to any functional bundle? 
+In these cases it's better to ask if the test case is correctly formulated. If it is, there are 2 possible options : Let the test case like that, or Create a bundle of test cases with the bundle id "miscellaneous". Any way this is not an ideal case, it's preferably to think the coherency of these isolated tests cases. 
+
+#Advantages 
+Enrich the language and communication during the planning, execution and analyse of a test cycle, is more coherent to talk and discuss around functional blocks. Is easier analyse the impact of failing group of tests inside a functional module Create logic reference inside the test cycle and the relationships between another bundles.
+
+###Test cycles with low cohesion 
+**Martinj** : The test number 4218 is failing. 
+**Steff** : Could you tell me more about that test? 
+**Martijn** : The test 4218 verify if the application show a message error when the user exceed his credit. 
+**Steff** : What is the error? 
+**Martijn** : The user is notified when the application is closed... 
+
+
+
+###Test cycles with high cohesion 
+**Martijn** : The module "Account" has a test failing. Is the test 4218. 
+**Steff** : Could you tell me more about that? 
+**Martijn** : The module "customer" receives the notification when the application is closed 
+**Steff** : But the module "customer" receives at least the notification.... so this is not a blocking issue 
+**Martijn** : It's really a blocking issue, because the "portal" requires this information in real time to send to the "Legal" .... 
+
+
+In the discussion with low cohesion, the conversation is located around the failing test, the context is absent, it depends of the audience to ask more questions about the real value of that functionality. Estimate the impact of this fail requires more interaction between the 2 testers. This lead to an non efficient communication. In the other hand, discussions with a high cohesion the testers talk about modules and functionalities, the failing test is only an indicator. The conversation will be more productive and the mesure the impact involves more parameters. 
+
+###Hands-on : How to create these bundles in my tests? 
+A simple way to create this functional blocks is using some kind of label or tag to identify the tests. There are different test manager tools on the market to talk about each one. In Jira this can be done with the field "Components" or using labels
